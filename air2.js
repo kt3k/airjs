@@ -53,7 +53,7 @@ this.flow = window.air2.branch(function (flowPrototype, parent, decorators) {
         return Math.floor(Math.random() * n);
     };
 
-    flowPrototype.init = function () {
+    flowPrototype.init = function (dom) {
         this
         .css({
             position: 'absolute',
@@ -67,7 +67,9 @@ this.flow = window.air2.branch(function (flowPrototype, parent, decorators) {
         .setHue(dice(360))
         .setLum(25)
         .setX(-220)
-        .setY(100);
+        .setY(100)
+        .appendTo(dom)
+        .commit();
     }
     .E(decorators.Chainable);
 
