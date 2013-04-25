@@ -35,6 +35,15 @@ this.air2 = window.div.branch(function (airPrototype, parent, decorators) {
             self.loop();
         });
     };
+
+    airPrototype.stop = function () {
+        this
+        .disapper()
+        .transition()
+        .remove()
+        .transitionCommit();
+    };
+
 }).setBranchGenerator();
 
 this.flow = window.air2.branch(function (flowPrototype, parent, decorators) {
