@@ -16,6 +16,8 @@ this.air2 = window.div.branch(function (airPrototype, parent, decorators) {
         };
     };
 
+    decorators.Transitionable = window.transition.Transitionable;
+
     airPrototype.loopIndex = 0;
 
     airPrototype.loopArray = [];
@@ -79,7 +81,7 @@ this.flow = window.air2.branch(function (flowPrototype, parent, decorators) {
         .duration(10000)
         .setX(340);
     }
-    .E(window.div.Transitionable)
+    .E(decorators.Transitionable)
     .E(decorators.Chainable);
 
     flowPrototype.right = function () {
@@ -88,7 +90,7 @@ this.flow = window.air2.branch(function (flowPrototype, parent, decorators) {
         .duration(10000)
         .setX(-220);
     }
-    .E(window.div.Transitionable)
+    .E(decorators.Transitionable)
     .E(decorators.Chainable);
 
     flowPrototype.disapper = function () {
@@ -100,4 +102,70 @@ this.flow = window.air2.branch(function (flowPrototype, parent, decorators) {
     .E(decorators.Chainable);
 
     flowPrototype.loopArray = ['left', 'right'];
+});
+
+this.kunkun = this.air2.branch(function (kunkunPrototype, parent, decorators) {
+    kunkunPrototype.init = function (dom) {
+        this
+        .css({
+            position: 'absolute',
+            width: '20px',
+            height: '20px',
+            left: '0',
+            top: '0'
+        })
+        .setHue(floatingBox.dice(360))
+        .setX(-30)
+        .setY(10)
+        .appendTo(dom)
+        .commit();
+
+    }
+    .E(decorators.Chainable);
+
+    kunkunPrototype.a = function () {
+        this
+        .transition()
+        .duration(300)
+        .setX(10);
+    }
+    .E(decorators.Transitionable)
+    .E(decorators.Chainable);
+
+    kunkunPrototype.b = function () {
+        this
+        .transition()
+        .duration(300)
+        .setY(-30);
+    }
+    .E(decorators.Transitionable)
+    .E(decorators.Chainable);
+
+    kunkunPrototype.c = function () {
+        this
+        .transition()
+        .duration(100)
+        .setX(-30);
+    }
+    .E(decorators.Transitionable)
+    .E(decorators.Chainable);
+
+    kunkunPrototype.d = function () {
+        this
+        .transition()
+        .duration(100)
+        .setY(10);
+    }
+    .E(decorators.Transitionable)
+    .E(decorators.Chainable);
+
+    kunkunPrototype.disapper = function () {
+        this
+        .transition
+        .duration(500)
+        .css({opacity: 0});
+    }
+    .E(decorators.Chainable);
+
+    kunkunPrototype.loopArray = ['a', 'b', 'c', 'd'];
 });
