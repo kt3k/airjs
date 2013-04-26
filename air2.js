@@ -5,18 +5,8 @@
 
 // js の継承は prototype と親の prototype (super 相当) 受け取って修飾する関数で作るパターンが best practice な気がしてきた。
 
-this.air2 = window.div.branch(function (airPrototype, parent, decorators) {
+this.air2 = window.div.branch(function (airPrototype) {
     'use strict';
-
-    decorators.Chainable = function (func) {
-        return function () {
-            func.apply(this, arguments);
-
-            return this;
-        };
-    };
-
-    decorators.Transitionable = window.transition.Transitionable;
 
     airPrototype.loopIndex = 0;
 
@@ -105,6 +95,12 @@ this.flow = window.air2.branch(function (flowPrototype, parent, decorators) {
 });
 
 this.kunkun = this.air2.branch(function (kunkunPrototype, parent, decorators) {
+    'use strict';
+
+    var dice = function (n) {
+        return Math.floor(Math.random() * n);
+    };
+
     kunkunPrototype.init = function (dom) {
         this
         .css({
@@ -114,7 +110,7 @@ this.kunkun = this.air2.branch(function (kunkunPrototype, parent, decorators) {
             left: '0',
             top: '0'
         })
-        .setHue(floatingBox.dice(360))
+        .setHue(dice(360))
         .setX(-30)
         .setY(10)
         .appendTo(dom)
