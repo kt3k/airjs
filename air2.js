@@ -3,14 +3,18 @@
  * copyright: (c) yuggs project
  */
 
-// js の継承は prototype と親の prototype (super 相当) 受け取って修飾する関数で作るパターンが best practice な気がしてきた。
-
-this.air2 = window.div.branch(function (airPrototype) {
+this.air2 = window.div.branch(function (airPrototype, parent, decorators) {
     'use strict';
 
     airPrototype.loopIndex = 0;
 
     airPrototype.loopArray = [];
+
+    airPrototype.start = function () {
+        this.loop();
+    }
+    .E(decorators.Transitionable)
+    .E(decorators.Chainable);
 
     airPrototype.loop = function () {
         if (this.loopArray.length === 0) {
@@ -26,17 +30,22 @@ this.air2 = window.div.branch(function (airPrototype) {
         this[method]().transitionCommit().callback(function () {
             self.loop();
         });
-    };
+    }
+    .E(decorators.Chainable);
 
     airPrototype.stop = function () {
         this
+        .transitionCancel()
         .disapper()
         .transition()
         .remove()
         .transitionCommit();
-    };
+    }
+    .E(decorators.Chainable);
 
-}).setBranchGenerator();
+    this.setBranchGenerator();
+
+});
 
 this.flow = window.air2.branch(function (flowPrototype, parent, decorators) {
     'use strict';
@@ -45,7 +54,11 @@ this.flow = window.air2.branch(function (flowPrototype, parent, decorators) {
         return Math.floor(Math.random() * n);
     };
 
-    flowPrototype.init = function (dom) {
+    flowPrototype.init = function (dom, y, duration, z) {
+        this.flowDuration = duration || 10000;
+
+        y = y == null ? 100 : y
+
         this
         .css({
             position: 'absolute',
@@ -53,13 +66,14 @@ this.flow = window.air2.branch(function (flowPrototype, parent, decorators) {
             top: '0px',
             width: '200px',
             height: '100px',
-            zIndex: '-10',
+            zIndex: (z || -10),
             webkitTransitionTimingFunction: 'linear'
         })
+        .setSat(dice(100))
         .setHue(dice(360))
         .setLum(25)
         .setX(-220)
-        .setY(100)
+        .setY(y)
         .appendTo(dom)
         .commit();
     }
@@ -68,7 +82,7 @@ this.flow = window.air2.branch(function (flowPrototype, parent, decorators) {
     flowPrototype.left = function () {
         this
         .transition()
-        .duration(10000)
+        .duration(this.flowDuration)
         .setX(340);
     }
     .E(decorators.Transitionable)
@@ -77,7 +91,7 @@ this.flow = window.air2.branch(function (flowPrototype, parent, decorators) {
     flowPrototype.right = function () {
         this
         .transition()
-        .duration(10000)
+        .duration(this.flowDuration)
         .setX(-220);
     }
     .E(decorators.Transitionable)
@@ -157,7 +171,7 @@ this.kunkun = this.air2.branch(function (kunkunPrototype, parent, decorators) {
 
     kunkunPrototype.disapper = function () {
         this
-        .transition
+        .transition()
         .duration(500)
         .css({opacity: 0});
     }
