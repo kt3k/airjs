@@ -10,10 +10,9 @@ this.air2 = window.div.branch(function (airPrototype, parent, decorators) {
 
     airPrototype.loopArray = [];
 
-    airPrototype.start = function () {
+    airPrototype.appear = function () {
         this.loop();
     }
-    .E(decorators.Transitionable)
     .E(decorators.Chainable);
 
     airPrototype.loop = function () {
