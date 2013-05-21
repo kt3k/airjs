@@ -10,6 +10,20 @@ this.air2 = window.div.branch(function (airPrototype, parent, decorators) {
 
     airPrototype.loopArray = [];
 
+    decorators.Disappearing = function (func) {
+        return function () {
+            this
+            .transitionCancel()
+
+            func.apply(this, arguments);
+
+            this
+            .transition()
+            .remove()
+            .transitionCommit();
+        };
+    };
+
     airPrototype.appear = function () {
         this.loop();
     }
@@ -29,16 +43,6 @@ this.air2 = window.div.branch(function (airPrototype, parent, decorators) {
         this[method]().transitionCommit().callback(function () {
             self.loop();
         });
-    }
-    .E(decorators.Chainable);
-
-    airPrototype.stop = function () {
-        this
-        .transitionCancel()
-        .disapper()
-        .transition()
-        .remove()
-        .transitionCommit();
     }
     .E(decorators.Chainable);
 
@@ -96,13 +100,13 @@ this.flow = window.air2.branch(function (flowPrototype, parent, decorators) {
     .E(decorators.Transitionable)
     .E(decorators.Chainable);
 
-    flowPrototype.disapper = function () {
+    flowPrototype.disappear = function () {
         this
         .transition()
         .duration(500)
         .css({opacity: 0});
     }
-    .E(decorators.Chainable);
+    .E(decorators.Disappearing);
 
     flowPrototype.loopArray = ['left', 'right'];
 });
@@ -168,13 +172,13 @@ this.kunkun = this.air2.branch(function (kunkunPrototype, parent, decorators) {
     .E(decorators.Transitionable)
     .E(decorators.Chainable);
 
-    kunkunPrototype.disapper = function () {
+    kunkunPrototype.disappear = function () {
         this
         .transition()
         .duration(500)
         .css({opacity: 0});
     }
-    .E(decorators.Chainable);
+    .E(decorators.Disappearing);
 
     kunkunPrototype.loopArray = ['a', 'b', 'c', 'd'];
 });
