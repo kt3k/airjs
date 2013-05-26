@@ -1,6 +1,6 @@
 /**
  * air2.js
- * copyright: (c) yuggs project
+ * copyright: (c) yggs project
  */
 
 this.air2 = window.div.branch(function (airPrototype, parent, decorators) {
@@ -9,6 +9,8 @@ this.air2 = window.div.branch(function (airPrototype, parent, decorators) {
     airPrototype.loopIndex = 0;
 
     airPrototype.loopArray = [];
+
+    airPrototype.initialDelay = 0;
 
     decorators.Disappearing = function (func) {
         return function () {
@@ -25,7 +27,10 @@ this.air2 = window.div.branch(function (airPrototype, parent, decorators) {
     };
 
     airPrototype.appear = function () {
-        this.loop();
+        this
+        .transition()
+        .duration(this.initialDelay)
+        .loop();
     }
     .E(decorators.Chainable);
 
@@ -57,10 +62,11 @@ this.flow = window.air2.branch(function (flowPrototype, parent, decorators) {
         return Math.floor(Math.random() * n);
     };
 
-    flowPrototype.init = function (dom, y, duration, z) {
-        this.flowDuration = duration || 10000;
+    flowPrototype.init = function (args) {
+        this.flowDuration = args.duration || 10000;
+        this.initialDelay = args.delay || 0;
 
-        y = y == null ? 100 : y
+        var y = args.y == null ? 100 : args.y
 
         this
         .css({
@@ -69,7 +75,7 @@ this.flow = window.air2.branch(function (flowPrototype, parent, decorators) {
             top: '0px',
             width: '200px',
             height: '100px',
-            zIndex: (z || -10),
+            zIndex: (args.z || -10),
             webkitTransitionTimingFunction: 'linear'
         })
         .setSat(dice(100))
@@ -77,7 +83,7 @@ this.flow = window.air2.branch(function (flowPrototype, parent, decorators) {
         .setLum(25)
         .setX(-220)
         .setY(y)
-        .appendTo(dom)
+        .appendTo(args.dom || document.body)
         .commit();
     }
     .E(decorators.Chainable);
@@ -118,7 +124,7 @@ this.kunkun = this.air2.branch(function (kunkunPrototype, parent, decorators) {
         return Math.floor(Math.random() * n);
     };
 
-    kunkunPrototype.init = function (dom) {
+    kunkunPrototype.init = function (args) {
         this
         .css({
             position: 'absolute',
@@ -130,7 +136,7 @@ this.kunkun = this.air2.branch(function (kunkunPrototype, parent, decorators) {
         .setHue(dice(360))
         .setX(-30)
         .setY(10)
-        .appendTo(dom)
+        .appendTo(args.dom || document.body)
         .commit();
 
     }
