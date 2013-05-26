@@ -125,6 +125,11 @@ this.kunkun = this.air2.branch(function (kunkunPrototype, parent, decorators) {
     };
 
     kunkunPrototype.init = function (args) {
+        this.dist = args.dist || 40;
+        var x = args.x || -45;
+        var y = args.y || dice(200) + 100;
+        this.dur = args.dur || 500;
+
         this
         .css({
             position: 'absolute',
@@ -134,8 +139,8 @@ this.kunkun = this.air2.branch(function (kunkunPrototype, parent, decorators) {
             top: '0'
         })
         .setHue(dice(360))
-        .setX(-30)
-        .setY(10)
+        .setX(x)
+        .setY(y + this.dist)
         .appendTo(args.dom || document.body)
         .commit();
 
@@ -145,8 +150,8 @@ this.kunkun = this.air2.branch(function (kunkunPrototype, parent, decorators) {
     kunkunPrototype.a = function () {
         this
         .transition()
-        .duration(300)
-        .setX(10);
+        .duration(this.dur)
+        .addX(this.dist);
     }
     .E(decorators.Transitionable)
     .E(decorators.Chainable);
@@ -154,8 +159,8 @@ this.kunkun = this.air2.branch(function (kunkunPrototype, parent, decorators) {
     kunkunPrototype.b = function () {
         this
         .transition()
-        .duration(300)
-        .setY(-30);
+        .duration(this.dur)
+        .addY(- this.dist);
     }
     .E(decorators.Transitionable)
     .E(decorators.Chainable);
@@ -163,8 +168,8 @@ this.kunkun = this.air2.branch(function (kunkunPrototype, parent, decorators) {
     kunkunPrototype.c = function () {
         this
         .transition()
-        .duration(100)
-        .setX(-30);
+        .duration(this.dur)
+        .addX(- this.dist);
     }
     .E(decorators.Transitionable)
     .E(decorators.Chainable);
@@ -172,8 +177,8 @@ this.kunkun = this.air2.branch(function (kunkunPrototype, parent, decorators) {
     kunkunPrototype.d = function () {
         this
         .transition()
-        .duration(100)
-        .setY(10);
+        .duration(this.dur)
+        .addY(this.dist);
     }
     .E(decorators.Transitionable)
     .E(decorators.Chainable);
