@@ -45,7 +45,8 @@ this.air2 = window.div.branch(function (airPrototype, parent, decorators) {
 
         var self = this;
 
-        this[method]().transitionCommit().callback(function () {
+        this[method]();
+        this.transitionCommit().callback(function () {
             self.loop();
         });
     }
@@ -192,4 +193,44 @@ this.kunkun = this.air2.branch(function (kunkunPrototype, parent, decorators) {
     .E(decorators.Disappearing);
 
     kunkunPrototype.loopArray = ['a', 'b', 'c', 'd'];
+});
+
+this.urouro = this.air2.branch(function (urouroPrototype, parent, decorators) {
+    'use strict';
+
+    var dice = function (n) {
+        return Math.floor(Math.random() * n);
+    };
+
+    urouroPrototype.init = function (args) {
+        args = args || {};
+        this
+        .css({
+            position: 'absolute',
+            width: '20px',
+            height: '20px',
+            left: '0',
+            top: '0'
+        })
+        .setHue(dice(360))
+        .setX(args.x || 10)
+        .setY(args.y || 10)
+        .appendTo(args.dom || document.body)
+        .commit();
+    }
+    .E(decorators.Chainable);
+
+    urouroPrototype.move = function () {
+        this.transition()
+        .duration(1200)
+        .addX(dice(21) - 10)
+        .addY(dice(21) - 10)
+        .addScale(dice(21) - 10)
+    };
+
+    urouroPrototype.disappear = function () {
+    }
+    .E(decorators.Disappearing);
+
+    urouroPrototype.loopArray = ['move'];
 });
