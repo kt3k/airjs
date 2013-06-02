@@ -94,18 +94,14 @@ this.flow = window.air2.branch(function (flowPrototype, parent, decorators) {
         .transition()
         .duration(this.flowDuration)
         .setX(340);
-    }
-    .E(decorators.Transitionable)
-    .E(decorators.Chainable);
+    };
 
     flowPrototype.right = function () {
         this
         .transition()
         .duration(this.flowDuration)
         .setX(-220);
-    }
-    .E(decorators.Transitionable)
-    .E(decorators.Chainable);
+    };
 
     flowPrototype.disappear = function () {
         this
@@ -153,36 +149,28 @@ this.kunkun = this.air2.branch(function (kunkunPrototype, parent, decorators) {
         .transition()
         .duration(this.dur)
         .addX(this.dist);
-    }
-    .E(decorators.Transitionable)
-    .E(decorators.Chainable);
+    };
 
     kunkunPrototype.b = function () {
         this
         .transition()
         .duration(this.dur)
         .addY(- this.dist);
-    }
-    .E(decorators.Transitionable)
-    .E(decorators.Chainable);
+    };
 
     kunkunPrototype.c = function () {
         this
         .transition()
         .duration(this.dur)
         .addX(- this.dist);
-    }
-    .E(decorators.Transitionable)
-    .E(decorators.Chainable);
+    };
 
     kunkunPrototype.d = function () {
         this
         .transition()
         .duration(this.dur)
         .addY(this.dist);
-    }
-    .E(decorators.Transitionable)
-    .E(decorators.Chainable);
+    };
 
     kunkunPrototype.disappear = function () {
         this
