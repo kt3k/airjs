@@ -191,29 +191,57 @@ this.urouro = this.air2.branch(function (urouroPrototype, parent, decorators) {
     };
 
     urouroPrototype.init = function (args) {
+        this.x = args.x || 0;
+        this.y = args.y || 0;
+        this.size = args.size || 47;
+        this.screenWidth = args.screenWidth || 320;
+        this.screenHeight = args.screenHeight || 414;
+        this.speed = args.speed || 0.025;
+        this.zIndex = args.zIndex || -99;
+
         args = args || {};
         this
         .css({
             position: 'absolute',
-            width: '20px',
-            height: '20px',
+            width: this.size + 'px',
+            height: this.size + 'px',
             left: '0',
-            top: '0'
+            top: '0',
+            webkitTransitionTimingFunction: 'linear',
+            zIndex: this.zIndex
         })
         .setHue(dice(360))
-        .setX(args.x || 10)
-        .setY(args.y || 10)
+        .setSat(15)
+        .setLum(10)
+        .setX(this.x)
+        .setY(this.y)
         .appendTo(args.dom || document.body)
         .commit();
     }
     .E(decorators.Chainable);
 
     urouroPrototype.move = function () {
+        var param = this.getNextParam();
+
         this.transition()
-        .duration(1200)
-        .addX(dice(21) - 10)
-        .addY(dice(21) - 10)
-        .addScale(dice(21) - 10)
+        .duration(param.duration)
+        .setX(param.x)
+        .setY(param.y)
+    };
+
+    urouroPrototype.getNextParam = function () {
+        var isHorizontal = dice(2);
+
+        var x = isHorizontal ? dice(this.screenWidth - this.size) : this.x;
+        var y = !isHorizontal ? dice(this.screenHeight - this.size) : this.y;
+
+        var d = isHorizontal ? Math.abs(x - this.x) : Math.abs(y - this.y);
+        var duration = d / this.speed;
+
+        this.x = x;
+        this.y = y;
+
+        return {x: x, y: y, duration: duration};
     };
 
     urouroPrototype.disappear = function () {
