@@ -66,6 +66,7 @@ this.flow = window.air2.branch(function (flowPrototype, parent, decorators) {
     flowPrototype.init = function (args) {
         this.flowDuration = args.duration || 10000;
         this.initialDelay = args.delay || 0;
+        this.zIndex = args.zIndex || -100
 
         var y = args.y == null ? 100 : args.y
 
@@ -76,12 +77,12 @@ this.flow = window.air2.branch(function (flowPrototype, parent, decorators) {
             top: '0px',
             width: '200px',
             height: '100px',
-            zIndex: (args.z || -10),
+            zIndex: this.zIndex,
             webkitTransitionTimingFunction: 'linear'
         })
         .setSat(dice(100))
         .setHue(dice(360))
-        .setLum(25)
+        .setLum(10)
         .setX(-220)
         .setY(y)
         .appendTo(args.dom || document.body)
